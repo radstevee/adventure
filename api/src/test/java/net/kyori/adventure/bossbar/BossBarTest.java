@@ -26,6 +26,7 @@ package net.kyori.adventure.bossbar;
 import com.google.common.collect.ImmutableSet;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import net.kyori.adventure.text.Component;
@@ -69,7 +70,7 @@ public class BossBarTest {
       BossBarTest.this.flags.incrementAndGet();
     }
   };
-  private final BossBar bar = BossBar.bossBar((ComponentLike) Component.empty(), 1f, BossBar.Color.PURPLE, BossBar.Overlay.PROGRESS);
+  private final BossBar bar = BossBar.bossBar((ComponentLike) Component.empty(), 1f, BossBar.Color.PURPLE, BossBar.Overlay.PROGRESS, UUID.fromString("454c9909-7092-4e6b-bd65-f799099b1ab1"));
 
   @Test
   void testOfFlags() {
@@ -222,6 +223,11 @@ public class BossBarTest {
       assertThat(changes.flagsAdded.get()).isEmpty();
       assertThat(changes.flagsRemoved.get()).containsExactly(BossBar.Flag.PLAY_BOSS_MUSIC);
     });
+  }
+
+  @Test
+  void testUuid() {
+    assertEquals(UUID.fromString("454c9909-7092-4e6b-bd65-f799099b1ab1"), this.bar.uuid());
   }
 
   static class Changes implements BossBar.Listener {
