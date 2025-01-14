@@ -24,6 +24,7 @@
 package net.kyori.adventure.bossbar;
 
 import java.util.Set;
+import java.util.UUID;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
@@ -99,7 +100,24 @@ public interface BossBar extends Examinable {
    */
   static @NotNull BossBar bossBar(final @NotNull ComponentLike name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay) {
     BossBarImpl.checkProgress(progress);
-    return bossBar(name.asComponent(), progress, color, overlay);
+    return bossBar(name, progress, color, overlay, UUID.randomUUID());
+  }
+
+  /**
+   * Creates a new bossbar.
+   *
+   * @param name the name
+   * @param progress the progress, between 0 and 1
+   * @param color the color
+   * @param overlay the overlay
+   * @param uuid the UUID
+   * @return a bossbar
+   * @throws IllegalArgumentException if progress is less than 0 or greater than 1
+   * @since 4.19.0
+   */
+  static @NotNull BossBar bossBar(final @NotNull ComponentLike name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull UUID uuid) {
+    BossBarImpl.checkProgress(progress);
+    return bossBar(name.asComponent(), progress, color, overlay, uuid);
   }
 
   /**
@@ -115,7 +133,24 @@ public interface BossBar extends Examinable {
    */
   static @NotNull BossBar bossBar(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay) {
     BossBarImpl.checkProgress(progress);
-    return new BossBarImpl(name, progress, color, overlay);
+    return bossBar(name, progress, color, overlay, UUID.randomUUID());
+  }
+
+  /**
+   * Creates a new bossbar.
+   *
+   * @param name the name
+   * @param progress the progress, between 0 and 1
+   * @param color the color
+   * @param overlay the overlay
+   * @param uuid the UUID
+   * @return a bossbar
+   * @throws IllegalArgumentException if progress is less than 0 or greater than 1
+   * @since 4.19.0
+   */
+  static @NotNull BossBar bossBar(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull UUID uuid) {
+    BossBarImpl.checkProgress(progress);
+    return new BossBarImpl(name, progress, color, overlay, uuid);
   }
 
   /**
@@ -132,7 +167,25 @@ public interface BossBar extends Examinable {
    */
   static @NotNull BossBar bossBar(final @NotNull ComponentLike name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull Set<Flag> flags) {
     BossBarImpl.checkProgress(progress);
-    return bossBar(name.asComponent(), progress, color, overlay, flags);
+    return bossBar(name, progress, color, overlay, flags, UUID.randomUUID());
+  }
+
+  /**
+   * Creates a new bossbar.
+   *
+   * @param name the name
+   * @param progress the progress, between 0 and 1
+   * @param color the color
+   * @param overlay the overlay
+   * @param flags the flags
+   * @param uuid the UUID
+   * @return a bossbar
+   * @throws IllegalArgumentException if progress is less than 0 or greater than 1
+   * @since 4.19.0
+   */
+  static @NotNull BossBar bossBar(final @NotNull ComponentLike name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull Set<Flag> flags, final @NotNull UUID uuid) {
+    BossBarImpl.checkProgress(progress);
+    return bossBar(name.asComponent(), progress, color, overlay, flags, uuid);
   }
 
   /**
@@ -149,7 +202,25 @@ public interface BossBar extends Examinable {
    */
   static @NotNull BossBar bossBar(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull Set<Flag> flags) {
     BossBarImpl.checkProgress(progress);
-    return new BossBarImpl(name, progress, color, overlay, flags);
+    return bossBar(name, progress, color, overlay, flags, UUID.randomUUID());
+  }
+
+  /**
+   * Creates a new bossbar.
+   *
+   * @param name the name
+   * @param progress the progress, between 0 and 1
+   * @param color the color
+   * @param overlay the overlay
+   * @param flags the flags
+   * @param uuid the UUID
+   * @return a bossbar
+   * @throws IllegalArgumentException if progress is less than 0 or greater than 1
+   * @since 4.19.0
+   */
+  static @NotNull BossBar bossBar(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull Set<Flag> flags, final @NotNull UUID uuid) {
+    BossBarImpl.checkProgress(progress);
+    return new BossBarImpl(name, progress, color, overlay, flags, uuid);
   }
 
   /**
@@ -417,6 +488,15 @@ public interface BossBar extends Examinable {
     viewer.hideBossBar(this);
     return this;
   }
+
+  /**
+   * Gets the UUID of this bossbar.
+   *
+   * @return the UUID
+   *
+   * @since 4.19.0
+   */
+  @NotNull UUID uuid();
 
   /**
    * A listener for changes that happen on a {@link BossBar}.

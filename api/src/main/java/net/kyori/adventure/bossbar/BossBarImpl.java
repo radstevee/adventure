@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
@@ -52,6 +53,7 @@ final class BossBarImpl extends HackyBossBarPlatformBridge implements BossBar {
   private Color color;
   private Overlay overlay;
   private final Set<Flag> flags = EnumSet.noneOf(Flag.class);
+  private final UUID uuid;
   @Nullable BossBarImplementation implementation;
 
   @ApiStatus.Internal
@@ -73,15 +75,16 @@ final class BossBarImpl extends HackyBossBarPlatformBridge implements BossBar {
     }
   }
 
-  BossBarImpl(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay) {
+  BossBarImpl(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull UUID uuid) {
     this.name = requireNonNull(name, "name");
     this.progress = progress;
     this.color = requireNonNull(color, "color");
     this.overlay = requireNonNull(overlay, "overlay");
+    this.uuid = uuid;
   }
 
-  BossBarImpl(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull Set<Flag> flags) {
-    this(name, progress, color, overlay);
+  BossBarImpl(final @NotNull Component name, final float progress, final @NotNull Color color, final @NotNull Overlay overlay, final @NotNull Set<Flag> flags, final @NotNull UUID uuid) {
+    this(name, progress, color, overlay, uuid);
     this.flags.addAll(flags);
   }
 
@@ -278,6 +281,11 @@ final class BossBarImpl extends HackyBossBarPlatformBridge implements BossBar {
     for (final Listener listener : this.listeners) {
       consumer.accept(listener);
     }
+  }
+
+  @Override
+  public @NotNull UUID uuid() {
+    return this.uuid;
   }
 
   private static void onFlagsAdded(final BossBarImpl bar, final Set<Flag> flagsAdded) {
